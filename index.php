@@ -1,5 +1,6 @@
 <?php 
-include_once "includes/productos.php";
+//include_once "includes/productos.php";
+include_once "funciones/funciones.php";
 /*echo "<pre>";
 print_r($productos);
 echo "</pre>";*/

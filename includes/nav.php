@@ -20,7 +20,7 @@
                         <a class="nav-link" href="index.php?sec=comics&serie=batman">Batman</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?sec=comics&serie=Wonder-Woman">Wonder Woman</a>
+                        <a class="nav-link" href="index.php?sec=comics&serie=wonder-woman">Wonder Woman</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index.php?sec=envios">Envios</a>

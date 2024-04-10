@@ -1,10 +1,19 @@
 <?php
+    
     $serieSeleccionada = $_GET["serie"];
-    $comics = $productos[$serieSeleccionada];
+    $productos = catalogo_completo();
+    $comics = catalogo_x_personaje($productos, $serieSeleccionada);
+    // echo "<pre>";
+    // print_r($comics);
+    // echo "</pre>";
+
+    //$comics = catalogo_x_personaje($productos, $serieSeleccionada);
     //echo $serieSeleccionada;
+    //$titulo = $productos[$serieSeleccionada][0]["serie"];
+
 ?>
 
-<h1 class="text-center my-5"><?= $serieSeleccionada ?></h1>
+<h1 class="text-center my-5"><?= correccionTitulo($serieSeleccionada) ?></h1>
 
 <div class="row">
     <?php foreach ($comics as $comic) { ?>
@@ -14,7 +23,7 @@
             <div class="card-body">
                 <p class="fs-6 m-0 fw-bold text-danger"><?= $comic["serie"] ?></p>
                 <h5 class="card-title"><?= $comic["titulo"] ?><h5>
-                <p class="card-text"><?= $comic["bajada"] ?></p>
+                <p class="card-text"><?= recortar_descripcion($comic["bajada"]) ?></p>
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Guion: <?= $comic["guion"] ?></li>
