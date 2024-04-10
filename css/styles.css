@@ -1,0 +1,8 @@
+pre{
+    border:thin solid gainsboro;
+    border-radius: 1em;
+    background-color: ghostwhite;
+    margin: 1em;
+    padding: 1em;
+    color: rgb(44, 44, 44);
+}
