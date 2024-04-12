@@ -14,6 +14,9 @@
                         <a class="nav-link" href="index.php?sec=quienes_somos">Quienes somos?</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="index.php?sec=todosLosComics">Todos</a>
+                    </li>                    
+                    <li class="nav-item">
                         <a class="nav-link" href="index.php?sec=comics&serie=iron-man">Iron Man</a>
                     </li>
                     <li class="nav-item">

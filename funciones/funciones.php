@@ -248,3 +248,12 @@ function catalogo_x_personaje($comics, $personaje){
     //print_r($personajes);
     return $personajes;
 }
+
+function catalogo_x_id($comics, $id){
+    foreach ($comics as $comic) {
+        if( $comic["id"] == $id ){
+            return $comic;
+        }
+    }
+    return [];
+}

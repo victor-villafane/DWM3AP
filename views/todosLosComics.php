@@ -1,8 +1,7 @@
 <?php
     
-    $serieSeleccionada = $_GET["serie"];
-    $productos = catalogo_completo();
-    $comics = catalogo_x_personaje($productos, $serieSeleccionada);
+    //$serieSeleccionada = $_GET["serie"];
+    $comics = catalogo_completo();
     // echo "<pre>";
     // print_r($comics);
     // echo "</pre>";
@@ -13,7 +12,7 @@
 
 ?>
 
-<h1 class="text-center my-5"><?= correccionTitulo($serieSeleccionada) ?></h1>
+<h1 class="text-center my-5">Todos los comics</h1>
 
 <div class="row">
     <?php foreach ($comics as $comic) { ?>
