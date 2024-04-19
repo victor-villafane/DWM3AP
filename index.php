@@ -1,6 +1,7 @@
 <?php 
 //include_once "includes/productos.php";
 include_once "funciones/funciones.php";
+require_once "class/Comic.php";
 /*echo "<pre>";
 print_r($productos);
 echo "</pre>";*/
@@ -30,10 +31,7 @@ $vistasValidas = [
     "404" => [
         "titulo" => "Pagina no encontrada"
     ],
-    "admin" => [
-        "titulo" => "Administracion",
-        "restringido" => true
-    ]
+
 ];
 
 if( array_key_exists($seccion, $vistasValidas) ){
