@@ -23,7 +23,7 @@
             <div class="card-body">
                 <p class="fs-6 m-0 fw-bold text-danger"><?= $comic->getSerie() ?></p>
                 <h5 class="card-title"><?= $comic->getTitulo() ?><h5>
-                <p class="card-text"><?= recortar_descripcion($comic->getBajada()) ?></p>
+                <p class="card-text"><?= $comic->getBajadaReducida() ?></p>
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Guion: <?= $comic->getGuion() ?></li>
