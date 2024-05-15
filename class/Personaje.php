@@ -149,4 +149,17 @@
     
             return $resultado ? $resultado : null;
         }
+
+        public function catalogo_completo(){
+                $conexion = new Conexion();
+                $db = $conexion->getConexion();
+                $query = "SELECT * FROM personajes";
+                $PDOStament = $db->prepare($query);
+                $PDOStament->setFetchMode(PDO::FETCH_CLASS, self::class);
+                $PDOStament->execute();
+        
+                $resultado = $PDOStament->fetchAll();
+        
+                return $resultado ? $resultado : [];                
+        }
     }
