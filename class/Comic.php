@@ -56,32 +56,27 @@ class Comic
         return $catalogo;
     }
 
-    function catalogo_x_personaje($personaje)
+    function catalogo_x_personaje(int $personaje_id)
     {
-        $comics = $this->catalogo_completo();
         $personajes = [];
-
-        foreach ($comics as $comic) {
-            if ($comic->personaje == $personaje) {
-                //array_push($personajes, $comic);
-                $personajes[] = $comic;
-            }
-        }
-
+        $conexion = ( new Conexion() )->getConexion();
+        $query = "SELECT * FROM `comics` WHERE personaje_principal_id = $personaje_id";
+        $PDOStament = $conexion->prepare($query);
+        $PDOStament->setFetchMode(PDO::FETCH_CLASS, self::class);
+        $PDOStament->execute();
+        $personajes = $PDOStament->fetchAll();
         return $personajes;
     }
 
-    public function catalogo_x_id(int $id): Comic|array
+    public function catalogo_x_id(int $id)
     {
-        $comics = $this->catalogo_completo();
-
-        foreach ($comics as $comic) {
-            if ($comic->id == $id) {
-                return $comic;
-            }
-        }
-
-        return [];
+        $conexion = ( new Conexion() )->getConexion();
+        $query = "SELECT * FROM `comics` WHERE id = $id";
+        $PDOStament = $conexion->prepare($query);
+        $PDOStament->setFetchMode(PDO::FETCH_CLASS, self::class);
+        $PDOStament->execute();
+        $comic = $PDOStament->fetch();
+        return isset($comic) ? $comic : false;
     }
 
     /**
@@ -97,7 +92,8 @@ class Comic
      */
     public function getPersonaje()
     {
-        return $this->personaje_principal_id;
+        $personaje = ( new Personaje() )->get_x_id($this->personaje_principal_id);
+        return $personaje->getNombre();
     }
 
     /**
@@ -147,7 +143,8 @@ class Comic
      */
     public function getGuion()
     {
-        return $this->guionista_id;
+        $guionista = ( new Guionista() )->get_x_id($this->guionista_id);
+        return $guionista->getNombreCompleto();
     }
 
     /**
@@ -155,7 +152,8 @@ class Comic
      */
     public function getArte()
     {
-        return $this->artista_id;
+        $artista = ( new Artista() )->get_x_id($this->artista_id);
+        return $artista->getNombreCompleto();
     }
 
     /**

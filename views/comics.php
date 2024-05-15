@@ -1,8 +1,9 @@
 <?php
     
-    $serieSeleccionada = $_GET["serie"];
+    $id_personaje = $_GET["serie"];
     //$productos = catalogo_completo();
-    $comics = (new Comic())->catalogo_x_personaje($serieSeleccionada);
+    $comics = (new Comic())->catalogo_x_personaje($id_personaje);
+    $personaje = (new Personaje())->get_x_id($id_personaje);
     // echo "<pre>";
     // print_r($comics);
     // echo "</pre>";
@@ -13,7 +14,7 @@
 
 ?>
 
-<h1 class="text-center my-5"><?= correccionTitulo($serieSeleccionada) ?></h1>
+<h1 class="text-center my-5"><?= $personaje->getNombre() ?></h1>
 
 <div class="row">
     <?php foreach ($comics as $comic) { ?>
@@ -23,7 +24,7 @@
             <div class="card-body">
                 <p class="fs-6 m-0 fw-bold text-danger"><?= $comic->getSerie() ?></p>
                 <h5 class="card-title"><?= $comic->getTitulo() ?><h5>
-                <p class="card-text"><?= recortar_descripcion($comic->getBajada()) ?></p>
+                <p class="card-text"><?= $comic->getBajadaReducida() ?></p>
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Guion: <?= $comic->getGuion() ?></li>

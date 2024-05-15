@@ -1,32 +1,48 @@
 <?php
-    
-    $id = $_GET["id"];
-    //$productos = catalogo_completo();
-    $comic = (new Comic() )->catalogo_x_id($id);
+
+$id = $_GET['id'];
+//$productos = catalogo_completo();
+$comic = (new Comic())->catalogo_x_id($id);
 ?>
+<?php if( isset($comic) ){ ?>
+<h1 class="text-center my-5"><?= $comic->getPersonaje() ?></h1>
 
-<h1 class="text-center my-5"><?= $id ?></h1>
+<div class="col">
 
-<div class="row">
-    <?php //foreach ($comics as $comic) { ?>
-        <div class="col-3">
-        <div class="card mb-3">
-            <img class="card-img-top" src="img/covers/<?= $comic->getPortada() ?>"/>
-            <div class="card-body">
-                <p class="fs-6 m-0 fw-bold text-danger"><?= $comic->getSerie() ?></p>
-                <h5 class="card-title"><?= $comic->getTitulo() ?><h5>
-                <p class="card-text"><?= recortar_descripcion($comic->getBajada()) ?></p>
+<h1 class="text-center my-5"> <?= $comic->getTitulo() ?> </h1>
+        <div class="col">
+            <div class="card mb-5">
+                <div class="row g-0">
+                    <div class="col-md-5">
+                        <img src="img/covers/<?= $comic->getPortada() ?>" class="img-fluid rounded-start border-end" alt="Portada de  <?= $comic->getTitulo() ?>">
+                    </div>
+                    <div class="col-md-7 d-flex flex-column p-3">
+                        <div class="card-body flex-grow-0">
+                            <p class="fs-4 m-0 fw-bold text-danger"><?= $comic->getTitulo() ?></p>
+                            <h2 class="card-title fs-2 mb-4"><?= $comic->getTitulo(); ?></h2>
+                            <p class="card-text"><?= $comic->getBajada() ?></p>
+                        </div>
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><span class="fw-bold">Guion:</span> <?= $comic->getGuion(); ?></li>
+                            <li class="list-group-item"><span class="fw-bold">Arte:</span> <?= $comic->getArte(); ?></li>
+                            <li class="list-group-item"><span class="fw-bold">Publicación:</span> <?= $comic->getPublicacion() ?></li>
+                        </ul>
+
+                        <div class="card-body flex-grow-0 mt-auto">
+                            <div class="fs-3 mb-3 fw-bold text-center text-danger">$<?= $comic->getPrecio() ?></div>
+                            <a href="#" class="btn btn-danger w-100 fw-bold">COMPRAR</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">Guion: <?= $comic->getGuion() ?></li>
-                <li class="list-group-item">Arte: <?= $comic->getArte() ?></li>
-                <li class="list-group-item">Publicacion: <?= $comic->getPublicacion() ?></li>
-            </ul>
-            <div class="card-body">
-                <div class="fs-3 mb-3 fw-bold text-center text-danger">$<?= $comic->getPrecio() ?></div>
-                <a href="index.php?sec=comic&id=<?= $comic->getId() ?>" class="btn btn-danger w-100 fw-bold">COMPRAR</a>
-            </div>
-        </div>
-    </div>
-    <?php // } ?>
+
+
+         </div>
+    
+
 </div>
+
+<?php }else{ ?>
+<p>No se encontro personaje</p>
+<?php } ?>

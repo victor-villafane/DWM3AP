@@ -17,13 +17,13 @@
                         <a class="nav-link" href="index.php?sec=todosLosComics">Todos</a>
                     </li>                    
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?sec=comics&serie=iron-man">Iron Man</a>
+                        <a class="nav-link" href="index.php?sec=comics&serie=1">Iron Man</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?sec=comics&serie=batman">Batman</a>
+                        <a class="nav-link" href="index.php?sec=comics&serie=2">Batman</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?sec=comics&serie=wonder-woman">Wonder Woman</a>
+                        <a class="nav-link" href="index.php?sec=comics&serie=3">Wonder Woman</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index.php?sec=envios">Envios</a>

@@ -1,9 +1,10 @@
 <?php 
 //include_once "includes/productos.php";
-include_once "funciones/funciones.php";
-require_once "class/Comic.php";
-require_once "class/Conexion.php";
-require_once "class/Serie.php";
+// require_once "class/Comic.php";
+// require_once "class/Conexion.php";
+// require_once "class/Serie.php";
+// require_once "class/Artista.php";
+require_once "funciones/autoload.php";
 /*echo "<pre>";
 print_r($productos);
 echo "</pre>";*/
