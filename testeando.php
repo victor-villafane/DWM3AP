@@ -5,22 +5,22 @@ $conexion = new Conexion();
 
 $db = $conexion->getConexion();
 
-$query = "SELECT * FROM comics";
+$query = "INSERT INTO personajes VALUES (NULL, 'nombre desde php', 'alias desde php', 'biografia desde php','creador desde php',1989, 'imagen desde php');";
 
 $PDOStament = $db->prepare($query);
 
-$PDOStament->setFetchMode(PDO::FETCH_CLASS, Comic::class);
+// $PDOStament->setFetchMode(PDO::FETCH_CLASS, Comic::class);
 
 $PDOStament->execute();
 
-$comics = [];
+// $comics = [];
 
-while($comic = $PDOStament->fetch()){
-    $comics []= $comic;
-}
+// while($comic = $PDOStament->fetch()){
+//     $comics []= $comic;
+// }
 
-echo "<pre>";
-print_r($comics);
-echo "</pre>";
+// echo "<pre>";
+// print_r($comics);
+// echo "</pre>";
 
 

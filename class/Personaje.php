@@ -162,4 +162,11 @@
         
                 return $resultado ? $resultado : [];                
         }
+
+        public function insert($nombre, $alias, $biografia,$creador,$primera_aparicion,$imagen){
+                $conexion = (new Conexion())->getConexion();
+                $query = "INSERT INTO personajes VALUES (NULL, '$nombre', '$alias', '$biografia','$creador',$primera_aparicion, '$imagen');";
+                $PDOStament = $conexion->prepare($query);
+                $PDOStament->execute();                
+        }
     }

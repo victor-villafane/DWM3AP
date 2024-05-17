@@ -12,6 +12,9 @@ $vistasValidas = [
     ],
     'admin_personajes' => [
         'titulo' => 'administracion de personajes'
+    ],
+    'add_personaje' => [
+        'titulo' => 'Agregar personaje'
     ]
 ];
 
