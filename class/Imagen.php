@@ -13,4 +13,17 @@ class Imagen{
             }
         }
     }
+
+    public function borrarImagen(string $filename) : bool
+    {
+        if( file_exists($filename) ){
+            $fileDelete = unlink($filename); 
+            if($fileDelete){
+                return true;
+            }else{
+                throw new Exception("No se pudo borrar imagen");
+                return false;
+            }
+        }
+    }
 }

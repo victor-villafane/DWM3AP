@@ -169,4 +169,11 @@
                 $PDOStament = $conexion->prepare($query);
                 $PDOStament->execute();                
         }
+
+        public function delete(){
+                $conexion = (new Conexion())->getConexion();
+                $query = "DELETE FROM personajes WHERE id = $this->id";
+                $PDOStament = $conexion->prepare($query);
+                $PDOStament->execute();  
+        }
     }

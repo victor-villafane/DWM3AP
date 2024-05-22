@@ -30,8 +30,8 @@ $personajes = (new Personaje())->catalogo_completo();
                         <td> <?= $personaje->getPrimeraAparicion() ?> </td>
                         <td><?= $personaje->getBiografia() ?></td>
                         <td>
-                            <a href="" class="d-block btn btn-sm btn-warning mb-1">Editar</a>
-                            <a href="actions/delete_personaje.php?id=<?= $personaje->getId() ?>" class="d-block btn btn-sm btn-danger">Eliminar</a>
+                            <a href="index.php?sec=edit_personaje&id=<?= $personaje->getId() ?>" class="d-block btn btn-sm btn-warning mb-1">Editar</a>
+                            <a href="index.php?sec=delete_personaje&id=<?= $personaje->getId() ?>" class="d-block btn btn-sm btn-danger">Eliminar</a>
                         </td>
                     </tr>
                     <?php } ?>
