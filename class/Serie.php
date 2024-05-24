@@ -73,4 +73,35 @@ class Serie{
 
         return $resultado ? $resultado : null;
     }
+
+    public function catalogo_completo(){
+        $conexion = new Conexion();
+        $db = $conexion->getConexion();
+        $query = "SELECT * FROM series";
+        $PDOStament = $db->prepare($query);
+        $PDOStament->setFetchMode(PDO::FETCH_CLASS, self::class);
+        $PDOStament->execute();
+
+        $resultado = $PDOStament->fetchAll();
+
+        return $resultado ? $resultado : [];                
+}
+public function insert($nombre, $historia){
+    $conexion = (new Conexion())->getConexion();
+    $query = "INSERT INTO series VALUES (NULL, '$nombre', '$historia');";
+    $PDOStament = $conexion->prepare($query);
+    $PDOStament->execute();                
+}
+public function delete(){
+    $conexion = (new Conexion())->getConexion();
+    $query = "DELETE FROM series WHERE id = $this->id";
+    $PDOStament = $conexion->prepare($query);
+    $PDOStament->execute();  
+}
+public function edit($nombre, $historia, $id){
+    $conexion = (new Conexion())->getConexion();
+    $query = "UPDATE series SET nombre = '$nombre', historia='$historia' WHERE id = $id;";
+    $PDOStament = $conexion->prepare($query);
+    $PDOStament->execute();
+}  
 }

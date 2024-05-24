@@ -21,7 +21,19 @@ $vistasValidas = [
     ],
     'edit_personaje' => [
         'titulo' => "Editar personaje"
-    ]
+    ],
+    "admin_series" => [
+        "titulo" => "Administracion de series"
+    ],
+    'add_serie' => [
+        'titulo' => 'Agregar Serie'
+    ],  
+    'delete_serie' => [
+        'titulo' => 'Seguro que quieres Eliminar?'
+    ],   
+    'edit_serie' => [
+        'titulo' => 'Editar Serie'
+    ],             
 ];
 
 if (array_key_exists($seccion, $vistasValidas)) {
@@ -63,7 +75,10 @@ if (array_key_exists($seccion, $vistasValidas)) {
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index.php?sec=admin_personajes">Personajes</a>
-                    </li>                    
+                    </li>     
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?sec=admin_series">Series</a>
+                    </li>                                     
                 </ul>
             </div>
         </div>
