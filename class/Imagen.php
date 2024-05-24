@@ -24,6 +24,8 @@ class Imagen{
                 throw new Exception("No se pudo borrar imagen");
                 return false;
             }
+        }else{
+            return true;
         }
     }
 }

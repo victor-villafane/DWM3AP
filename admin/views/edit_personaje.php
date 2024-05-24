@@ -10,6 +10,7 @@
         <div class="row mb-5 d-flex align-items-center">
 
         <form class="row g-3" action="actions/edit_personaje_acc.php" method="POST" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="<?= $personaje->getId() ?>" >
 		<div class="col-md-6 mb-3">
 			<label for="nombre" class="form-label">Nombre</label>
 			<input type="text" class="form-control" id="nombre" name="nombre" value=<?= $personaje->getNombre() ?>>
@@ -23,7 +24,8 @@
 		<div class="col-md-6 mb-3">
             <img src="../img/personajes/<?= $personaje->getImagen()?>">
 			<label for="imagen" class="form-label">Imagen</label>
-			<input class="form-control" type="file" id="imagen" name="imagen">
+			<input class="form-control" type="file" id="imagen" name="imagen" >
+			<input type="hidden" name="imagen_original" value="<?= $personaje->getImagen() ?>">
 		</div>
 
 		<div class="col-md-6 mb-3">
@@ -41,7 +43,7 @@
 			<textarea class="form-control" id="bio" name="biografia" rows="3"><?= $personaje->getBiografia() ?></textarea>
 		</div>
 
-		<button type="submit" class="btn btn-primary">Cargar</button>
+		<button type="submit" class="btn btn-primary">Editar</button>
 	</form>
             
 

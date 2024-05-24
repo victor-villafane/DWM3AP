@@ -176,4 +176,18 @@
                 $PDOStament = $conexion->prepare($query);
                 $PDOStament->execute();  
         }
+
+        public function reemplazarImagen($imagen, $id){
+                $conexion = (new Conexion())->getConexion();
+                $query = "UPDATE personajes SET imagen = '$imagen' WHERE id = $id;";
+                $PDOStament = $conexion->prepare($query);
+                $PDOStament->execute();
+        }
+
+        public function edit($nombre, $alias, $biografia,$creador,$primera_aparicion, $id){
+                $conexion = (new Conexion())->getConexion();
+                $query = "UPDATE personajes SET nombre = '$nombre', alias='$alias', biografia='$biografia', creador='$creador',primera_aparicion='$primera_aparicion' WHERE id = $id;";
+                $PDOStament = $conexion->prepare($query);
+                $PDOStament->execute();
+        }        
     }
