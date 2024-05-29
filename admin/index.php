@@ -39,7 +39,13 @@ $vistasValidas = [
     ],
     "admin_artistas" => [
         "titulo" => "Administracion de Artistas"
-    ]                
+    ],
+    "admin_comics" => [
+        "titulo" => "Administracion de Comics"
+    ],
+    'add_comic' => [
+        'titulo' => 'Agregar Comic'
+    ],                      
 ];
 
 if (array_key_exists($seccion, $vistasValidas)) {
@@ -90,7 +96,10 @@ if (array_key_exists($seccion, $vistasValidas)) {
                     </li>     
                     <li class="nav-item">
                         <a class="nav-link" href="index.php?sec=admin_artistas">Artistas</a>
-                    </li>                                                                         
+                    </li>   
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?sec=admin_comics">Comics</a>
+                    </li>                                                                                             
                 </ul>
             </div>
         </div>
