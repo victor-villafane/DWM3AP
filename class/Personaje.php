@@ -165,9 +165,16 @@
 
         public function insert($nombre, $alias, $biografia,$creador,$primera_aparicion,$imagen){
                 $conexion = (new Conexion())->getConexion();
-                $query = "INSERT INTO personajes VALUES (NULL, '$nombre', '$alias', '$biografia','$creador',$primera_aparicion, '$imagen');";
+                $query = "INSERT INTO personajes VALUES (NULL, :nombre, :alias, :biografia,:creador,:primera_aparicion, :imagen);";
                 $PDOStament = $conexion->prepare($query);
-                $PDOStament->execute();                
+                $PDOStament->execute([
+                        "nombre" => htmlspecialchars($nombre),
+                        "alias" => htmlspecialchars($alias),
+                        "biografia" => htmlspecialchars($biografia),
+                        "creador" => htmlspecialchars($creador),
+                        "primera_aparicion" => htmlspecialchars($primera_aparicion),
+                        "imagen" => htmlspecialchars($imagen)
+                ]);                
         }
 
         public function delete(){
@@ -179,15 +186,26 @@
 
         public function reemplazarImagen($imagen, $id){
                 $conexion = (new Conexion())->getConexion();
-                $query = "UPDATE personajes SET imagen = '$imagen' WHERE id = $id;";
+                $query = "UPDATE personajes SET imagen = :imagen WHERE id = :id;";
                 $PDOStament = $conexion->prepare($query);
-                $PDOStament->execute();
+                $PDOStament->execute([
+                        "id" => htmlspecialchars($id),
+                        "imagen" => htmlspecialchars($imagen)
+                ]);
         }
 
         public function edit($nombre, $alias, $biografia,$creador,$primera_aparicion, $id){
                 $conexion = (new Conexion())->getConexion();
-                $query = "UPDATE personajes SET nombre = '$nombre', alias='$alias', biografia='$biografia', creador='$creador',primera_aparicion='$primera_aparicion' WHERE id = $id;";
+                $query = "UPDATE personajes SET nombre = :nombre, alias=:alias, biografia=:biografia, creador=:creador,primera_aparicion=:primera_aparicion WHERE id = :id;";
                 $PDOStament = $conexion->prepare($query);
-                $PDOStament->execute();
+                $PDOStament->execute([
+                        "nombre" => htmlspecialchars($nombre),
+                        "alias" => htmlspecialchars($alias),
+                        "biografia" => htmlspecialchars($biografia),
+                        "creador" => htmlspecialchars($creador),
+                        "primera_aparicion" => htmlspecialchars($primera_aparicion),
+                        "imagen" => htmlspecialchars($imagen),
+                        "id" => htmlspecialchars($id)
+                ]);
         }        
     }

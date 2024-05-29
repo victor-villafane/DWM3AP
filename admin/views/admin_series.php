@@ -20,8 +20,8 @@ $series = (new Serie())->catalogo_completo();
                 <?php foreach ($series as $serie) { ?>
                     <tr>
                         <td><?= $serie->getId() ?> </td>
-                        <td><?= $serie->getNombre() ?> </td>
-                        <td><?= $serie->getHistoria() ?> </td>
+                        <td><?= htmlspecialchars($serie->getNombre()) ?> </td>
+                        <td><?= htmlspecialchars($serie->getHistoria()) ?> </td>
                         <td>
                             <a href="index.php?sec=edit_serie&id=<?= $serie->getId() ?>" class="d-block btn btn-sm btn-warning mb-1">Editar</a>
                             <a href="index.php?sec=delete_serie&id=<?= $serie->getId() ?>" class="d-block btn btn-sm btn-danger">Eliminar</a>

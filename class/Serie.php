@@ -11,7 +11,7 @@ class Serie{
      */
     public function getId()
     {
-        return $this->id;
+        return htmlspecialchars($this->id);
     }
 
     /**
@@ -29,7 +29,7 @@ class Serie{
      */
     public function getNombre()
     {
-        return $this->nombre;
+        return htmlspecialchars($this->nombre);
     }
 
     /**
@@ -47,7 +47,7 @@ class Serie{
      */
     public function getHistoria()
     {
-        return $this->historia;
+        return htmlspecialchars($this->historia);
     }
 
     /**
@@ -64,10 +64,12 @@ class Serie{
     {
         $conexion = new Conexion();
         $db = $conexion->getConexion();
-        $query = "SELECT * FROM series WHERE id = $id";
+        $query = "SELECT * FROM series WHERE id = :id";
         $PDOStament = $db->prepare($query);
         $PDOStament->setFetchMode(PDO::FETCH_CLASS, self::class);
-        $PDOStament->execute();
+        $PDOStament->execute([
+            "id" => htmlspecialchars($id) //injeccion SQL y XSS
+        ]);
 
         $resultado = $PDOStament->fetch();
 
@@ -88,9 +90,12 @@ class Serie{
 }
 public function insert($nombre, $historia){
     $conexion = (new Conexion())->getConexion();
-    $query = "INSERT INTO series VALUES (NULL, '$nombre', '$historia');";
+    $query = "INSERT INTO series VALUES (NULL, :nombre, :historia);";
     $PDOStament = $conexion->prepare($query);
-    $PDOStament->execute();                
+    $PDOStament->execute([
+        "nombre" => htmlspecialchars($nombre),
+        "historia" => htmlspecialchars($historia)
+    ]);                
 }
 public function delete(){
     $conexion = (new Conexion())->getConexion();
@@ -100,8 +105,12 @@ public function delete(){
 }
 public function edit($nombre, $historia, $id){
     $conexion = (new Conexion())->getConexion();
-    $query = "UPDATE series SET nombre = '$nombre', historia='$historia' WHERE id = $id;";
+    $query = "UPDATE series SET nombre = :nombre, historia=:historia WHERE id = :id;";
     $PDOStament = $conexion->prepare($query);
-    $PDOStament->execute();
+    $PDOStament->execute([
+        "nombre" => htmlspecialchars($nombre),
+        "historia" => htmlspecialchars($historia),
+        "id" => htmlspecialchars($id),
+    ]);
 }  
 }
