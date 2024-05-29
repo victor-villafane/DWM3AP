@@ -33,7 +33,13 @@ $vistasValidas = [
     ],   
     'edit_serie' => [
         'titulo' => 'Editar Serie'
-    ],             
+    ],    
+    "admin_guionistas" => [
+        "titulo" => "Administracion de Guionistas"
+    ],
+    "admin_artistas" => [
+        "titulo" => "Administracion de Artistas"
+    ]                
 ];
 
 if (array_key_exists($seccion, $vistasValidas)) {
@@ -78,7 +84,13 @@ if (array_key_exists($seccion, $vistasValidas)) {
                     </li>     
                     <li class="nav-item">
                         <a class="nav-link" href="index.php?sec=admin_series">Series</a>
-                    </li>                                     
+                    </li>      
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?sec=admin_guionistas">Guionistas</a>
+                    </li>     
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?sec=admin_artistas">Artistas</a>
+                    </li>                                                                         
                 </ul>
             </div>
         </div>

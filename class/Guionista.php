@@ -91,4 +91,16 @@ class Guionista
 
         return isset($resultado) ? $resultado : null;
     }
+    public function catalogo_completo(){
+        $conexion = new Conexion();
+        $db = $conexion->getConexion();
+        $query = "SELECT * FROM guionistas";
+        $PDOStament = $db->prepare($query);
+        $PDOStament->setFetchMode(PDO::FETCH_CLASS, self::class);
+        $PDOStament->execute();
+
+        $resultado = $PDOStament->fetchAll();
+
+        return $resultado ? $resultado : [];                
+}
 }
