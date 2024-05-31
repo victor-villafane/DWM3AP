@@ -45,7 +45,10 @@ $vistasValidas = [
     ],
     'add_comic' => [
         'titulo' => 'Agregar Comic'
-    ],                      
+    ],  
+    "edit_comic" => [
+        "titulo" => "Editar Comic"
+    ]                    
 ];
 
 if (array_key_exists($seccion, $vistasValidas)) {

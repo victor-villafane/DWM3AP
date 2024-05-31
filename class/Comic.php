@@ -59,7 +59,7 @@ class Comic
     function catalogo_x_personaje(int $personaje_id)
     {
         $personajes = [];
-        $conexion = ( new Conexion() )->getConexion();
+        $conexion = (new Conexion())->getConexion();
         $query = "SELECT * FROM `comics` WHERE personaje_principal_id = $personaje_id";
         $PDOStament = $conexion->prepare($query);
         $PDOStament->setFetchMode(PDO::FETCH_CLASS, self::class);
@@ -70,7 +70,7 @@ class Comic
 
     public function catalogo_x_id(int $id)
     {
-        $conexion = ( new Conexion() )->getConexion();
+        $conexion = (new Conexion())->getConexion();
         $query = "SELECT * FROM `comics` WHERE id = $id";
         $PDOStament = $conexion->prepare($query);
         $PDOStament->setFetchMode(PDO::FETCH_CLASS, self::class);
@@ -92,7 +92,7 @@ class Comic
      */
     public function getPersonaje()
     {
-        $personaje = ( new Personaje() )->get_x_id($this->personaje_principal_id);
+        $personaje = (new Personaje())->get_x_id($this->personaje_principal_id);
         return $personaje->getNombre();
     }
 
@@ -139,11 +139,19 @@ class Comic
     }
 
     /**
+     * Get the value of publicacion
+     */
+    public function getEditorial()
+    {
+        return $this->editorial;
+    }
+
+    /**
      * Get the value of guion
      */
     public function getGuion()
     {
-        $guionista = ( new Guionista() )->get_x_id($this->guionista_id);
+        $guionista = (new Guionista())->get_x_id($this->guionista_id);
         return $guionista->getNombreCompleto();
     }
 
@@ -152,7 +160,7 @@ class Comic
      */
     public function getArte()
     {
-        $artista = ( new Artista() )->get_x_id($this->artista_id);
+        $artista = (new Artista())->get_x_id($this->artista_id);
         return $artista->getNombreCompleto();
     }
 
@@ -184,9 +192,9 @@ class Comic
     {
         $miArray = explode(' ', $this->bajada); //string to array
         $arrayRecortado = [];
-        
-        if( count($miArray) < 20 ){
-                return implode(' ', $miArray) . '...';
+
+        if (count($miArray) < 20) {
+            return implode(' ', $miArray) . '...';
         }
 
         for ($i = 0; $i < $cantidad; $i++) {
@@ -196,5 +204,84 @@ class Comic
         }
 
         return implode(' ', $arrayRecortado) . '...'; //array to string
+    }
+
+    public function insert($titulo, $personaje, $serie, $publicacion, $guionista, $artista, $origen, $editorial, $precio, $portada, $bajada, $volumen, $numero)
+    {
+        $conexion = (new Conexion())->getConexion();
+        $query = 'INSERT INTO `comics` (`id`, `titulo`, `personaje_principal_id`, `guionista_id`, `artista_id`, `serie_id`, `volumen`, `numero`, `publicacion`, `origen`, `editorial`, `bajada`, `portada`, `precio`) VALUES (NULL, :titulo, :personaje, :guionista, :artista, :serie, :volumen, :numero, :publicacion, :origen, :editorial, :bajada, :portada, :precio)';
+        $PDOStament = $conexion->prepare($query);
+        $PDOStament->execute([
+            'titulo' => htmlspecialchars($titulo),
+            'personaje' => htmlspecialchars($personaje),
+            'guionista' => htmlspecialchars($guionista),
+            'artista' => htmlspecialchars($artista),
+            'serie' => htmlspecialchars($serie),
+            'volumen' => htmlspecialchars($volumen),
+            'numero' => htmlspecialchars($numero),
+            'publicacion' => htmlspecialchars($publicacion),
+            'origen' => htmlspecialchars($origen),
+            'editorial' => htmlspecialchars($editorial),
+            'bajada' => htmlspecialchars($bajada),
+            'portada' => htmlspecialchars($portada),
+            'precio' => htmlspecialchars($precio),
+        ]);
+    }
+    public function reemplazarImagen($imagen, $id)
+    {
+        $conexion = (new Conexion())->getConexion();
+        $query = 'UPDATE comics SET portada = :imagen WHERE id = :id;';
+        $PDOStament = $conexion->prepare($query);
+        $PDOStament->execute([
+            'id' => htmlspecialchars($id),
+            'imagen' => htmlspecialchars($imagen),
+        ]);
+    }
+
+    public function edit( string $titulo, $personaje, $serie, $publicacion, $guionista, $artista, $origen, $editorial, $precio, $bajada, $volumen, $numero, $id)
+    {
+        $conexion = (new Conexion())->getConexion();
+        $query = "UPDATE `comics` SET `titulo` = '$titulo', `personaje_principal_id` = '$personaje', `guionista_id` ='$guionista', `artista_id` = '$artista', `serie_id` = '$serie', `volumen` = '$volumen', `publicacion` = '$publicacion', `origen` = '$origen', `editorial` = '$editorial', `bajada` = '$bajada',`precio` = '$precio' WHERE `comics`.`id` = $id";
+
+        echo $query;
+
+        $PDOStament = $conexion->prepare($query);
+        $PDOStament->execute([
+            // 'titulo' => htmlspecialchars($titulo),
+            // 'personaje' => htmlspecialchars($personaje),
+            // 'guionista' => htmlspecialchars($guionista),
+            // 'artista' => htmlspecialchars($artista),
+            // 'serie' => htmlspecialchars($serie),
+            // 'volumen' => htmlspecialchars($volumen),
+            // 'numero' => htmlspecialchars($numero),
+            // 'publicacion' => htmlspecialchars($publicacion),
+            // 'origen' => htmlspecialchars($origen),
+            // 'editorial' => htmlspecialchars($editorial),
+            // 'bajada' => htmlspecialchars($bajada),
+            // 'precio' => htmlspecialchars($precio),
+            // 'id' => htmlspecialchars($id)
+        ]);
+    }
+    public function getPersonaje_id()
+    {
+        return $this->personaje_principal_id;
+    }
+    public function getSerie_id()
+    {
+        return $this->serie_id;
+    }
+    public function getGuionista_id()
+    {
+        return $this->guionista_id;
+    }
+
+    public function getArtista_id()
+    {
+        return $this->artista_id;
+    }
+
+    public function getOrigen()
+    {
+        return $this->origen;
     }
 }
