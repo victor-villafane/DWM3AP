@@ -1,13 +1,8 @@
 <?php
-
-echo "<pre>";
-print_r($_POST);
-print_r($_FILES);
-echo "</pre>";
 require_once "../../funciones/autoload.php";
 
 $fileData = $_FILES["portada"]["tmp_name"] ?$_FILES["portada"]: FALSE;
-
+$personajes_secundarios_ids = $_POST["personajes_secundarios"];
 try {
     if( $fileData ){
         if(!empty($_POST["portada_original"])){
@@ -31,6 +26,10 @@ try {
         $_POST["numero"],
         $_POST["id"],
     );
+    (new Comic())->clear_personajes_secundarios($_POST["id"]);
+    foreach ($personajes_secundarios_ids as $personaje_id) {
+        (new Comic())->add_personaje_sec($_POST["id"], $personaje_id);
+    }
     header("Location: ../index.php?sec=admin_comics");
 } catch (Exception $e) {
     echo $e->getMessage();

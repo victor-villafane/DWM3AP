@@ -17,6 +17,7 @@ class Comic
     protected $origen;
     protected $editorial;
     protected $precio;
+    protected $personajes_secundarios;
     //metodos
     public function catalogo_completo()
     {
@@ -45,7 +46,7 @@ class Comic
         //     }
         $conexion = new Conexion();
         $db = $conexion->getConexion();
-        $query = 'SELECT * FROM comics';
+        $query = 'SELECT comics.*,GROUP_CONCAT(comic_x_personaje.id_personaje) AS personajes_secundarios FROM comics LEFT JOIN comic_x_personaje ON comics.id = comic_x_personaje.id_comic GROUP BY comics.id';
         $PDOStament = $db->prepare($query);
         $PDOStament->setFetchMode(PDO::FETCH_CLASS, Comic::class);
         $PDOStament->execute();
@@ -71,7 +72,7 @@ class Comic
     public function catalogo_x_id(int $id)
     {
         $conexion = (new Conexion())->getConexion();
-        $query = "SELECT * FROM `comics` WHERE id = $id";
+        $query = "SELECT comics.*,GROUP_CONCAT(comic_x_personaje.id_personaje) AS personajes_secundarios FROM `comics`LEFT JOIN comic_x_personaje ON comics.id = comic_x_personaje.id_comic WHERE comics.id = $id GROUP BY comics.id";
         $PDOStament = $conexion->prepare($query);
         $PDOStament->setFetchMode(PDO::FETCH_CLASS, self::class);
         $PDOStament->execute();
@@ -226,6 +227,7 @@ class Comic
             'portada' => htmlspecialchars($portada),
             'precio' => htmlspecialchars($precio),
         ]);
+        return $conexion->lastInsertId();
     }
     public function reemplazarImagen($imagen, $id)
     {
@@ -262,6 +264,25 @@ class Comic
             // 'id' => htmlspecialchars($id)
         ]);
     }
+
+    public function add_personaje_sec($id_comic, $id_personaje){
+        $conexion = (new Conexion())->getConexion();
+        $query = 'INSERT INTO `comic_x_personaje` (`id`, `id_comic`, `id_personaje`) VALUES (NULL, :id_comic, :id_personaje)';
+        $PDOStament = $conexion->prepare($query);
+        $PDOStament->execute([
+            "id_comic" => $id_comic,
+            "id_personaje" => $id_personaje
+        ]);        
+    }
+
+    public function clear_personajes_secundarios($id_comic){
+        $conexion = (new Conexion())->getConexion();
+        $query = 'DELETE FROM comic_x_personaje WHERE id_comic = :id_comic';
+        $PDOStament = $conexion->prepare($query);
+        $PDOStament->execute([
+            "id_comic" => $id_comic,
+        ]);  
+    }
     public function getPersonaje_id()
     {
         return $this->personaje_principal_id;
@@ -283,5 +304,10 @@ class Comic
     public function getOrigen()
     {
         return $this->origen;
+    }
+
+    public function getPersonajesSecundarios()
+    {
+        return $this->personajes_secundarios;
     }
 }

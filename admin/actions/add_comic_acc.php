@@ -5,10 +5,10 @@ echo "<pre>";
 print_r($_POST);
 print_r($_FILES);
 echo "</pre>";
-
+$personajes_secundarios_ids = $_POST["personajes_secundarios"];
 try {
     $name = (new Imagen())->subirImagen($_FILES["portada"], "../../img/covers");
-    (new Comic())->insert(
+    $id_comic = (new Comic())->insert(
         $_POST["titulo"],
         $_POST["personaje"],
         $_POST["serie"],
@@ -22,6 +22,9 @@ try {
         $_POST["bajada"], 
         $_POST["volumen"],
         $_POST["numero"]);
+        foreach ($personajes_secundarios_ids as $personaje_id) {
+            (new Comic())->add_personaje_sec($id_comic, $personaje_id);
+        }
     header( "Location: ../index.php?sec=admin_comics" );
 } catch (Exception $e) {
     // echo $e->getMessage();

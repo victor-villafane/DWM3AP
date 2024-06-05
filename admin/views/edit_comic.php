@@ -102,7 +102,19 @@
 			<label for="bio" class="form-label">numero</label>
 			<input type="number" class="form-control" id="numero" name="numero" value="<?= $comic->getNumero() ?>">
 		</div>
-		
+		<div class="col-md-12 mb-3">
+                    <label for="bio" class="form-label">Personajes Secundarios</label>
+					<?php foreach ($personajes as $personaje) { 
+						$ps_seleccionado = explode(",", $comic->getPersonajesSecundarios());
+						?>
+						<div>
+							<input type="checkbox" name="personajes_secundarios[]" id="personaje_secundario_<?= $personaje->getId() ?>" value="<?= $personaje->getId() ?>" <?= in_array($personaje->getId(), $ps_seleccionado) ? "checked" : "" ?> >
+							<label for="personaje_secundario_<?= $personaje->getId() ?>">
+							<?= $personaje->getNombre() ?>
+						</label>
+						</div>
+					<?php } ?>
+                </div>
 		<div class="col-md-12 mb-3">
 			<label for="bio" class="form-label">bajada</label>
 			<textarea class="form-control" name="bajada" id="" cols="30" rows="10"><?= $comic->getBajada() ?></textarea>
