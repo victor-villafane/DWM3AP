@@ -2,7 +2,6 @@
 
 require_once "../../funciones/autoload.php";
 
-unset($_SESSION["login"]);
-session_destroy();
+(new Autentificacion())->log_out();
 
 header("Location: ../index.php");

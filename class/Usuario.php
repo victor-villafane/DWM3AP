@@ -63,6 +63,17 @@ class Usuario{
 		return $result ? $result : null; 
 	}
 
+	public function insert($email, $pass){
+		$conexion = (new Conexion())->getConexion();
+		$query = "INSERT INTO `usuarios` (`id`, `email`, `nombre_usuario`, `nombre_completo`, `password`, `roles`) VALUES (NULL, :email, '', '', :pass, 'usuario')";
+		$PDOStament = $conexion->prepare($query);
+		$paswordHash = password_hash(htmlspecialchars($pass), PASSWORD_DEFAULT);
+		$PDOStament->execute([
+			"email" => htmlspecialchars($email),
+			"pass" => $paswordHash
+		]);   		
+	}
+
 	/**
 	 * Get the value of roles
 	 */ 
