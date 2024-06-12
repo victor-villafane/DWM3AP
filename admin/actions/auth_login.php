@@ -8,6 +8,8 @@ $login = (new Autentificacion())->log_in($email, $pass);
 
 if($login){
     header("Location: ../index.php");
+    //mensaje de ok
 }else{
+    (new Alerta())->add_alerta("Usuario o contraseña incorrecto", "danger");
     header("Location: ../index.php?sec=login");
 }

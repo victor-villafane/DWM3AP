@@ -1,6 +1,7 @@
 <div>
     <div>
         <h1>Iniciar session</h1>
+        <?= (new Alerta())->get_alertas() ?>
         <form action="actions/auth_login.php" method="post">
             <label for="">Ingresar email</label>
             <input type="text" name="email" id="email">
