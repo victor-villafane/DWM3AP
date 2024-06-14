@@ -139,7 +139,7 @@
         public function get_x_id(int $id)
         {
             $conexion = new Conexion();
-            $db = $conexion->getConexion();
+            $db = Conexion::getConexion();
             $query = "SELECT * FROM personajes WHERE id = $id";
             $PDOStament = $db->prepare($query);
             $PDOStament->setFetchMode(PDO::FETCH_CLASS, self::class);
@@ -152,7 +152,7 @@
 
         public function catalogo_completo(){
                 $conexion = new Conexion();
-                $db = $conexion->getConexion();
+                $db = Conexion::getConexion();
                 $query = "SELECT * FROM personajes";
                 $PDOStament = $db->prepare($query);
                 $PDOStament->setFetchMode(PDO::FETCH_CLASS, self::class);
@@ -204,7 +204,6 @@
                         "biografia" => htmlspecialchars($biografia),
                         "creador" => htmlspecialchars($creador),
                         "primera_aparicion" => htmlspecialchars($primera_aparicion),
-                        "imagen" => htmlspecialchars($imagen),
                         "id" => htmlspecialchars($id)
                 ]);
         }        

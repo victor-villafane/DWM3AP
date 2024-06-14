@@ -93,7 +93,7 @@
 
         public function catalogo_completo(){
                 $conexion = new Conexion();
-                $db = $conexion->getConexion();
+                $db = Conexion::getConexion();
                 $query = "SELECT * FROM artistas";
                 $PDOStament = $db->prepare($query);
                 $PDOStament->setFetchMode(PDO::FETCH_CLASS, self::class);

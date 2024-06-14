@@ -141,6 +141,7 @@ if (array_key_exists($seccion, $vistasValidas)) {
             </div>
         </div>
     </nav>
+    <?= (new Alerta())->get_alertas() ?>
     <?php file_exists("views/$vistas.php") ? require "views/$vistas.php" : require 'views/dashboard.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 

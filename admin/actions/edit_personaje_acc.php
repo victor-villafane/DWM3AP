@@ -19,6 +19,7 @@ try {
         $_POST["primera_aparicion"],
         $_POST["id"]
     );
+    (new Alerta())->add_alerta("Se pudo editar el comic", "success");
     header("Location: ../index.php?sec=admin_personajes");
 } catch (Exception $e) {
     echo $e->getMessage();

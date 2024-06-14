@@ -3,9 +3,9 @@
     //$serieSeleccionada = $_GET["serie"];
     //$comics = catalogo_completo();
     $comics = ( new Comic() )->catalogo_completo();
-    // echo "<pre>";
-    // print_r($comics);
-    // echo "</pre>";
+    echo "<pre>";
+    print_r($comics);
+    echo "</pre>";
 
     //$comics = catalogo_x_personaje($productos, $serieSeleccionada);
     //echo $serieSeleccionada;

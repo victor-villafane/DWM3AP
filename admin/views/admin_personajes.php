@@ -8,6 +8,7 @@ $personajes = (new Personaje())->catalogo_completo();
     <div class="col">
         <h1 class="text-center mb-5 fw-bold">Administracion de personajes</h1>
         <div class="row mb-5 d-flex align-items-center">
+        <?= (new Alerta())->get_alertas() ?>
             <table class="table">
                 <thead>
                     <tr>

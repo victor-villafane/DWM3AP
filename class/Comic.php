@@ -4,55 +4,64 @@ class Comic
 {
     //atributos
     protected $id;
-    protected $personaje_principal_id;
-    protected $serie_id;
+    //protected $personaje_principal_id;
+    protected $personaje_principal;
+    //protected $serie_id;
+    protected $serie; //-> un objeto con todos sus metodos
     protected $volumen;
     protected $numero;
     protected $titulo;
     protected $publicacion;
-    protected $guionista_id;
-    protected $artista_id;
+    //protected $guionista_id;
+    protected $guionista;
+    // protected $artista_id;
+    protected $artista;
     protected $bajada;
     protected $portada;
     protected $origen;
     protected $editorial;
     protected $precio;
     protected $personajes_secundarios;
+    protected $personajes_secundarios_ids;
+    protected static $valoresDB = ["id", "volumen", "numero", "titulo", "publicacion", "bajada", "portada", "origen", "editorial", "precio"];
+
+    public function mapear($comicArrayAsociativo) : Comic
+    {
+        $comic = new self();
+
+        foreach (self::$valoresDB as $valor) {
+            $comic->{$valor} = $comicArrayAsociativo[$valor];
+        }
+
+        $comic->artista = (new Artista())->get_x_id($comicArrayAsociativo["artista_id"]);
+        $comic->guionista = (new Guionista())->get_x_id($comicArrayAsociativo["guionista_id"]);
+        $comic->personaje_principal = (new Personaje())->get_x_id($comicArrayAsociativo["personaje_principal_id"]);
+        $comic->serie = (new Serie())->get_x_id($comicArrayAsociativo["serie_id"]);
+
+        $PSids = explode(",", $comicArrayAsociativo["personajes_secundarios"]);
+        $personajes_secundarios = [];
+        if( !empty($PSids[0]) ){
+            foreach ($PSids as $PSid) {
+                $personajes_secundarios []= (new Personaje())->get_x_id(intval($PSid));
+            }
+        }
+        $comic->personajes_secundarios_ids = $comicArrayAsociativo["personajes_secundarios"];
+        $comic->personajes_secundarios = $personajes_secundarios;
+        return $comic;
+    }
+
     //metodos
     public function catalogo_completo()
     {
         $catalogo = [];
-        //     $miArchivoJson = file_get_contents("includes/productos.json");
-        //     $json_data = json_decode($miArchivoJson, true);
-
-        //     foreach ($json_data as $comicArray) {
-        //         //instancio
-        //         $comic = new Comic(); //new self
-        //         //rellenar los atributos
-        //         $comic->id = $comicArray["id"];
-        //         $comic->personaje = $comicArray["personaje"];
-        //         $comic->serie = $comicArray["serie"];
-        //         $comic->volumen = $comicArray["volumen"];
-        //         $comic->numero = $comicArray["numero"];
-        //         $comic->titulo = $comicArray["titulo"];
-        //         $comic->publicacion = $comicArray["publicacion"];
-        //         $comic->guion = $comicArray["guion"];
-        //         $comic->arte = $comicArray["arte"];
-        //         $comic->bajada = $comicArray["bajada"];
-        //         $comic->portada = $comicArray["portada"];
-        //         $comic->precio = $comicArray["precio"];
-
-        //         $catalogo []= $comic; //hago un array_push
-        //     }
         $conexion = new Conexion();
-        $db = $conexion->getConexion();
+        $db = Conexion::getConexion();
         $query = 'SELECT comics.*,GROUP_CONCAT(comic_x_personaje.id_personaje) AS personajes_secundarios FROM comics LEFT JOIN comic_x_personaje ON comics.id = comic_x_personaje.id_comic GROUP BY comics.id';
         $PDOStament = $db->prepare($query);
-        $PDOStament->setFetchMode(PDO::FETCH_CLASS, Comic::class);
+        $PDOStament->setFetchMode(PDO::FETCH_ASSOC);
         $PDOStament->execute();
-
         while ($comic = $PDOStament->fetch()) {
-            $catalogo[] = $comic;
+            $catalogo[] = $this->mapear($comic);
         }
         return $catalogo;
     }
@@ -61,11 +70,13 @@ class Comic
     {
         $personajes = [];
         $conexion = (new Conexion())->getConexion();
-        $query = "SELECT * FROM `comics` WHERE personaje_principal_id = $personaje_id";
+        $query = "SELECT comics.*,GROUP_CONCAT(comic_x_personaje.id_personaje) AS personajes_secundarios FROM comics LEFT JOIN comic_x_personaje ON comics.id = comic_x_personaje.id_comic WHERE personaje_principal_id = $personaje_id GROUP BY comics.id";
         $PDOStament = $conexion->prepare($query);
-        $PDOStament->setFetchMode(PDO::FETCH_CLASS, self::class);
+        $PDOStament->setFetchMode(PDO::FETCH_ASSOC);
         $PDOStament->execute();
-        $personajes = $PDOStament->fetchAll();
+        while ($comic = $PDOStament->fetch()) {
+            $personajes[] = $this->mapear($comic);
+        }
         return $personajes;
     }
 
@@ -74,9 +85,10 @@ class Comic
         $conexion = (new Conexion())->getConexion();
         $query = "SELECT comics.*,GROUP_CONCAT(comic_x_personaje.id_personaje) AS personajes_secundarios FROM `comics`LEFT JOIN comic_x_personaje ON comics.id = comic_x_personaje.id_comic WHERE comics.id = $id GROUP BY comics.id";
         $PDOStament = $conexion->prepare($query);
-        $PDOStament->setFetchMode(PDO::FETCH_CLASS, self::class);
+        $PDOStament->setFetchMode(PDO::FETCH_ASSOC);
         $PDOStament->execute();
-        $comic = $PDOStament->fetch();
+        $comicArray = $PDOStament->fetch();
+        $comic = $this->mapear($comicArray);
         return isset($comic) ? $comic : false;
     }
 
@@ -93,8 +105,7 @@ class Comic
      */
     public function getPersonaje()
     {
-        $personaje = (new Personaje())->get_x_id($this->personaje_principal_id);
-        return $personaje->getNombre();
+        return $this->personaje_principal->getNombre();
     }
 
     /**
@@ -102,9 +113,7 @@ class Comic
      */
     public function getSerie()
     {
-        $serieObjeto = new Serie();
-        $serie = $serieObjeto->get_x_id($this->serie_id);
-        return $serie->getNombre();
+        return $this->serie->getNombre();
     }
 
     /**
@@ -152,8 +161,7 @@ class Comic
      */
     public function getGuion()
     {
-        $guionista = (new Guionista())->get_x_id($this->guionista_id);
-        return $guionista->getNombreCompleto();
+        return $this->guionista->getNombreCompleto();
     }
 
     /**
@@ -161,8 +169,7 @@ class Comic
      */
     public function getArte()
     {
-        $artista = (new Artista())->get_x_id($this->artista_id);
-        return $artista->getNombreCompleto();
+        return $this->artista->getNombreCompleto();
     }
 
     /**
@@ -308,6 +315,6 @@ class Comic
 
     public function getPersonajesSecundarios()
     {
-        return $this->personajes_secundarios;
+        return $this->personajes_secundarios_ids;
     }
 }

@@ -3,7 +3,7 @@ require_once "class/Conexion.php";
 require_once "class/Comic.php";
 // $conexion = new Conexion();
 
-// $db = $conexion->getConexion();
+// $db = Conexion::getConexion();
 
 // $query = "INSERT INTO personajes VALUES (NULL, 'nombre desde php', 'alias desde php', 'biografia desde php','creador desde php',1989, 'imagen desde php');";
 
