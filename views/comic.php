@@ -31,7 +31,16 @@ $comic = (new Comic())->catalogo_x_id($id);
 
                         <div class="card-body flex-grow-0 mt-auto">
                             <div class="fs-3 mb-3 fw-bold text-center text-danger">$<?= $comic->getPrecio() ?></div>
-                            <a href="#" class="btn btn-danger w-100 fw-bold">COMPRAR</a>
+                            <form action="admin/actions/add_item_acc.php" method="post" class="row">
+                                <div class="col-6 d-flex" >
+                                    <label for="">Cantidad:</label>
+                                    <input class="form-control" type="number" name="c" id="c" value="1">
+                                </div>
+                                <div class="col-6">
+                                    <input class="btn btn-danger" type="submit" value="Comprar">
+                                    <input type="hidden" name="id" value="<?= $comic->getId()?>">
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

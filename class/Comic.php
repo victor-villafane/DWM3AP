@@ -252,7 +252,7 @@ class Comic
         $conexion = (new Conexion())->getConexion();
         $query = "UPDATE `comics` SET `titulo` = '$titulo', `personaje_principal_id` = '$personaje', `guionista_id` ='$guionista', `artista_id` = '$artista', `serie_id` = '$serie', `volumen` = '$volumen', `publicacion` = '$publicacion', `origen` = '$origen', `editorial` = '$editorial', `bajada` = '$bajada',`precio` = '$precio' WHERE `comics`.`id` = $id";
 
-        echo $query;
+        // echo $query;
 
         $PDOStament = $conexion->prepare($query);
         $PDOStament->execute([

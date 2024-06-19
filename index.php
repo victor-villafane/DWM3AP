@@ -34,6 +34,9 @@ $vistasValidas = [
     "404" => [
         "titulo" => "Pagina no encontrada"
     ],
+    "carrito" => [
+        "titulo" => "Carrito de compras"
+    ]
 
 ];
 
